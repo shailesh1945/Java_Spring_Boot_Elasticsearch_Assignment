@@ -6,6 +6,7 @@ import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Document(indexName = "courses")
@@ -48,8 +49,11 @@ public class CourseDocument {
     @Field(type = FieldType.Double)
     private Double price;
 
+//    @Field(type = FieldType.Date, format = DateFormat.date_time)
+//    private LocalDateTime nextSessionDate;
+
     @Field(type = FieldType.Date, format = DateFormat.date_time)
-    private LocalDateTime nextSessionDate;
+    private OffsetDateTime nextSessionDate;
 
     // Method to set both title and titleSuggest
     public void setTitle(String title) {

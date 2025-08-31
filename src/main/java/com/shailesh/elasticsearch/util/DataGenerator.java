@@ -2,10 +2,11 @@ package com.shailesh.elasticsearch.util;
 
 import com.shailesh.elasticsearch.model.CourseDocument;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.io.ResourceLoader;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,19 +50,25 @@ public class DataGenerator {
 
             course.setPrice(100 + random.nextDouble() * 400); // $100-$500
 
-            // Random date in the next 60 days
-            LocalDateTime now = LocalDateTime.now();
-            LocalDateTime sessionDate = now.plusDays(random.nextInt(60))
+            // Random OffsetDateTime in the next 60 days, UTC
+            OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
+            OffsetDateTime sessionDate = now.plusDays(random.nextInt(60))
                     .withHour(9 + random.nextInt(8))
-                    .withMinute(0);
+                    .withMinute(0)
+                    .withSecond(0)
+                    .withNano(0);
+
             course.setNextSessionDate(sessionDate);
 
             courses.add(course);
         }
 
+        // Jackson ObjectMapper with JavaTimeModule for OffsetDateTime
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         mapper.writeValue(new File("src/main/resources/sample-courses.json"), courses);
 
-        System.out.println("Generated 50 sample courses");
+        System.out.println("Generated 50 sample courses with OffsetDateTime");
     }
 }
