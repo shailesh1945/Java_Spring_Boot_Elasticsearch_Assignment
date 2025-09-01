@@ -33,7 +33,7 @@ cd course-search
 
 ## assignment video
 
-
+[![Watch the demo](https://img.youtube.com/vi/<VIDEO_ID>/0.jpg)](https://youtu.be/PUrpmsKZLew)
 
 ### 2. Start Elasticsearch
 
