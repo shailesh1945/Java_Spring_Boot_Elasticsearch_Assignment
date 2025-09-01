@@ -287,4 +287,3 @@ For issues and questions:
 * Validate JSON syntax in sample data
 
 ---
-```
